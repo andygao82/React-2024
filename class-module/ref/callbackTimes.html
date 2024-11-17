@@ -1,0 +1,71 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Refs</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/babel-standalone@6/babel.js"
+    ></script>
+
+    <script type="text/babel">
+      class Greetings extends React.Component {
+        render() {
+          return (
+            <div>
+              {/*<input
+                type="text"
+                placeholder="click button to pop"
+                ref={(currentNode) => {
+                  this.input1 = currentNode;
+                  console.log("@", this.input1);
+                }}
+              />*/}
+              <input
+                type="text"
+                placeholder="click button to pop"
+                ref={this.saveInput}
+              />
+              <br />
+              <button onClick={this.pop}>Click to Pop</button>
+            </div>
+          );
+        }
+
+        pop = () => {
+          console.log(this);
+          const { input1 } = this;
+          console.log(input1.value);
+        };
+
+        saveInput = (input) => {
+          this.input1 = input;
+        };
+      }
+
+      // Render the component to the DOM
+      const person = {
+        name: "Andy",
+        age: 18,
+        gender: "male",
+        speak: () => {
+          console.log("Hello, my name is Andy");
+        },
+      };
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<Greetings {...person} />);
+    </script>
+  </body>
+</html>

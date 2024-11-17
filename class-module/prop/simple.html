@@ -1,0 +1,82 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Props</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/babel-standalone@6/babel.js"
+    ></script>
+
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+
+    <script type="text/babel">
+      class Greetings extends React.Component {
+        constructor() {
+          super();
+          this.state = { isHot: true };
+          this.toggleHot = this.toggleHot.bind(this);
+        }
+
+        toggleHot() {
+          this.setState((prevState) => ({ isHot: !prevState.isHot }));
+        }
+
+        render() {
+          const { isHot } = this.state;
+          //prop is read-only
+          const { name, age, gender, speak } = this.props;
+
+          return (
+            <div>
+              <h1>
+                Hello {name}, {age + 1} years old, {gender}
+              </h1>
+              <div onClick={this.toggleHot}>
+                Today is {isHot ? " Hot" : " Cold"}
+              </div>
+              <br />
+              <button onClick={speak}>Click me to speak</button>
+            </div>
+          );
+        }
+
+        static propTypes = {
+          name: PropTypes.string.isRequired,
+          age: PropTypes.number.isRequired,
+          gender: PropTypes.string,
+          speak: PropTypes.func,
+        };
+
+        static defaultProps = {
+          age: 18,
+          gender: "female",
+        };
+      }
+
+      // Render the component to the DOM
+      const person = {
+        name: "Andy",
+        age: 18,
+        gender: "male",
+        speak: () => {
+          console.log("Hello, my name is Andy");
+        },
+      };
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<Greetings {...person} />);
+    </script>
+  </body>
+</html>

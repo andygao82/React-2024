@@ -1,0 +1,61 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controlled Component</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/babel-standalone@6/babel.js"
+    ></script>
+
+    <script type="text/babel">
+      class Form extends React.Component {
+        handleSubmit = () => {
+          const { userName, password } = this;
+          console.log(`User Name: ${userName}, Password: ${password}`);
+        };
+        render() {
+          return (
+            <form action="#" method="get" onSubmit={this.handleSubmit}>
+              <input
+                ref={(c) => (this.username = c)}
+                type="text"
+                placeholder="Name"
+              />
+              <input
+                ref={(c) => (this.password = c)}
+                type="password"
+                placeholder="Password"
+              />
+              <button type="submit">Submit</button>
+            </form>
+          );
+        }
+      }
+
+      // Render the component to the DOM
+      const person = {
+        name: "Andy",
+        age: 18,
+        gender: "male",
+        speak: () => {
+          console.log("Hello, my name is Andy");
+        },
+      };
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<Form {...person} />);
+    </script>
+  </body>
+</html>
