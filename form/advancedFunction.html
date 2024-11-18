@@ -2,7 +2,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>unControlled Component</title>
+    <title>Advanced Function</title>
   </head>
 
   <body>
@@ -22,22 +22,39 @@
 
     <script type="text/babel">
       class Form extends React.Component {
+        state = {
+          username: "",
+          password: "",
+        };
+        getData = (dataType) => {
+          return (event) => {
+            this.setState({
+              username:
+                dataType === "username"
+                  ? event.target.value
+                  : this.state.username,
+              password:
+                dataType === "password"
+                  ? event.target.value
+                  : this.state.password,
+            });
+          };
+        };
         handleSubmit = () => {
-          const { username, password } = this;
-          console.log(
-            `User Name: ${username.value}, Password: ${password.value}`
-          );
+          event.preventDefault();
+          // const { username, password } = this.state;
+          // console.log(`User Name: ${username}, Password: ${password}`);
         };
         render() {
           return (
             <form method="get" onSubmit={this.handleSubmit}>
               <input
-                ref={(c) => (this.username = c)}
+                onChange={this.getData("username")}
                 type="text"
                 placeholder="Name"
               />
               <input
-                ref={(c) => (this.password = c)}
+                onChange={this.getData("password")}
                 type="password"
                 placeholder="Password"
               />
@@ -47,17 +64,8 @@
         }
       }
 
-      // Render the component to the DOM
-      const person = {
-        name: "Andy",
-        age: 18,
-        gender: "male",
-        speak: () => {
-          console.log("Hello, my name is Andy");
-        },
-      };
       const root = ReactDOM.createRoot(document.getElementById("root"));
-      root.render(<Form {...person} />);
+      root.render(<Form />);
     </script>
   </body>
 </html>

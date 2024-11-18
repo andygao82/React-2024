@@ -1,0 +1,79 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Life Cycle</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/babel-standalone@6/babel.js"
+    ></script>
+
+    <script type="text/babel">
+      class App extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            count: 0,
+            opacity: 1,
+          };
+        }
+
+        componentDidMount() {
+          console.log("Component Mounted");
+        }
+
+        componentDidUpdate(prevProps, prevState) {
+          if (prevState.count !== this.state.count) {
+            console.log("Component Updated");
+          }
+        }
+
+        handleClick = () => {
+          this.setState((prevState) => ({ count: prevState.count + 1 }));
+        };
+
+        hideIt = () => {
+          root.unmount();
+        };
+
+        render() {
+          setInterval(() => {
+            let { opacity } = this.state;
+
+            if (opacity <= 0) {
+              opacity = 1;
+            } else {
+              opacity -= 0.1;
+            }
+
+            this.setState({ opacity });
+          }, 2000);
+          return (
+            <div>
+              <h1>Count: {this.state.count}</h1>
+              <button onClick={this.handleClick}>Click Me</button>
+
+              <h1 style={{ opacity: this.state.opacity }}>Me Disappear</h1>
+              <button onClick={this.hideIt}>Hide It</button>
+            </div>
+          );
+        }
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
