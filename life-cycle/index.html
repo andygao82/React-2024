@@ -32,12 +32,28 @@
 
         componentDidMount() {
           console.log("Component Mounted");
+          this.timer = setInterval(() => {
+            let { opacity } = this.state;
+
+            if (opacity <= 0) {
+              opacity = 1;
+            } else {
+              opacity -= 0.1;
+            }
+
+            this.setState({ opacity });
+          }, 200);
         }
 
         componentDidUpdate(prevProps, prevState) {
           if (prevState.count !== this.state.count) {
             console.log("Component Updated");
           }
+        }
+
+        componentWillUnmount() {
+          clearInterval(this.timer);
+          console.log("Component Unmounted");
         }
 
         handleClick = () => {
@@ -49,17 +65,6 @@
         };
 
         render() {
-          setInterval(() => {
-            let { opacity } = this.state;
-
-            if (opacity <= 0) {
-              opacity = 1;
-            } else {
-              opacity -= 0.1;
-            }
-
-            this.setState({ opacity });
-          }, 2000);
           return (
             <div>
               <h1>Count: {this.state.count}</h1>
