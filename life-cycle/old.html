@@ -107,6 +107,11 @@
           console.log("B received props", props);
         }
 
+        shouldComponentUpdate() {
+          console.log("B received shouldComponentUpdate");
+          return true;
+        }
+
         render() {
           return (
             <div>
