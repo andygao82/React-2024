@@ -1,0 +1,123 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Component Old</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/babel-standalone@6/babel.js"
+    ></script>
+
+    <script type="text/babel">
+      class App extends React.Component {
+        constructor(props) {
+          super(props); // Call the constructor of the parent class (React.Component) before initializing the state.
+          this.state = {
+            count: 0,
+          };
+        }
+
+        UNSAFE_componentWillMount() {
+          console.log("Component Will Mount");
+        }
+
+        componentDidMount() {
+          console.log("Component Mounted");
+        }
+
+        shouldComponentUpdate() {
+          console.log("Should Component Update");
+          return true; // If the shouldComponentUpdate method returns false, React will skip rendering the component.
+        }
+
+        UNSAFE_componentWillUpdate() {
+          console.log("Component Will Update");
+        }
+
+        componentWillUnmount() {
+          console.log("Component Will Unmount");
+        }
+
+        componentDidUpdate(prevProps, prevState) {
+          if (prevState.count !== this.state.count) {
+            console.log("Component Updated");
+          }
+        }
+
+        handleClick = () => {
+          this.setState((prevState) => ({ count: prevState.count + 1 }));
+        };
+
+        handleForce = () => {
+          this.forceUpdate();
+        };
+        render() {
+          return (
+            <div>
+              <h1>Count: {this.state.count}</h1>
+              <button onClick={this.handleClick}>Click Me</button>
+              <button onClick={this.handleForce}>Force</button>
+            </div>
+          );
+        }
+      }
+
+      class Car extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            color: "red",
+          };
+        }
+
+        changeCar = () => {
+          this.setState({ color: "blue" });
+        };
+        render() {
+          return (
+            <div>
+              <h1>It's A {this.state.color} Car</h1>
+              <B color={this.state.color} />
+              <button type="button" onClick={this.changeCar}>
+                Change Car
+              </button>
+            </div>
+          );
+        }
+      }
+
+      class B extends React.Component {
+        constructor(props) {
+          super(props);
+        }
+
+        UNSAFE_componentWillReceiveProps(props) {
+          console.log("B received props", props);
+        }
+
+        render() {
+          return (
+            <div>
+              <h2>I like {this.props.color}</h2>
+            </div>
+          );
+        }
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<Car />);
+    </script>
+  </body>
+</html>
