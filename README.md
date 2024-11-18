@@ -5,7 +5,7 @@ Old Lifecycle
 1. Initial Phase: 
   a. constructor()
   b. componentWillMount()
-  c. render()
+  c. render() ====> must have
   d. componentDidMount() ====> most useful, in this hook, you can do something like initialization. e.g. setInterval, request, subscription.
 
 2. Update Phase:
