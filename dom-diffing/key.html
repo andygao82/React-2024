@@ -1,0 +1,65 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Key</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/babel-standalone@6/babel.js"
+    ></script>
+
+    <script type="text/babel">
+      class Person extends React.Component {
+        constructor(props) {
+          super(props); // Call the constructor of the parent class (React.Component) before initializing the state.
+        }
+
+        state = {
+          people: [
+            {id: 1, name: 'John', age: 18},
+            {id: 2, name: 'Jane', age: 22},
+            {id: 3, name: 'Smith', age: 33},
+            {id: 4, name: 'Adam', age: 32},
+          ]
+        }
+
+        add = () => {
+          const {people} =  this.state
+          const newPerson = {id: people.length+1, name: 'David', age: Math.floor(Math.random() * 100)};
+          this.setState(prevState => ({ people: [...prevState.people, newPerson]}));
+        }
+
+        render() {
+          return (
+            <div>
+              <button onClick={this.add}>Add New Person</button>
+              {
+                this.state.people.map(person => (
+                  <div key={person.id}>
+                    <h2>{person.name}</h2>
+                    <p>Age: {person.age}</p>
+                  </div>
+                ))
+              }  
+            </div>
+          )
+        }
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<Person />);
+    </script>
+  </body>
+</html>

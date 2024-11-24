@@ -23,16 +23,65 @@
     <script type="text/babel">
       class App extends React.Component {
         constructor(props) {
+          console.log("constructor");
           super(props); // Call the constructor of the parent class (React.Component) before initializing the state.
+          this.state = {
+            count: 0,
+          };
         }
 
+        static getDerivedStateFromProps(props, state) {
+          console.log("Derived State From Props -- ", props, state);
+          return {
+            count: props.count,
+          };
+        }
+
+        getSnapshotBeforeUpdate(prevProps, prevState) {
+          console.log("Snapshot Before Update -- ", prevProps, prevState);
+          return null; // Return a snapshot value to be used in componentDidUpdate.
+        }
+
+        componentDidMount() {
+          console.log("Component Mounted");
+        }
+
+        shouldComponentUpdate() {
+          console.log("Should Component Update");
+          return true; // If the shouldComponentUpdate method returns false, React will skip rendering the component.
+        }
+
+        componentWillUnmount() {
+          console.log("Component Will Unmount");
+        }
+
+        componentDidUpdate(prevProps, prevState) {
+          if (prevState.count !== this.state.count) {
+            console.log("Component Updated");
+          }
+        }
+
+        handleClick = () => {
+          this.setState((prevState) => ({ count: prevState.count + 1 }));
+        };
+
+        handleForce = () => {
+          this.forceUpdate();
+        };
         render() {
-          return <div>123</div>;
+          console.log("render");
+          return (
+            <div>
+              <h1>Count: {this.state.count}</h1>
+              <button onClick={this.handleClick}>Click Me</button>
+              <button onClick={this.handleForce}>Force</button>
+            </div>
+          );
         }
       }
 
       const root = ReactDOM.createRoot(document.getElementById("root"));
-      root.render(<App />);
+      root.render(<App count={122} />);
     </script>
   </body>
 </html>
